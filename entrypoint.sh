@@ -20,5 +20,8 @@ sed -i "s/fft_bin_bits.*/fft_bin_bits = ${FFT_BIN_BITS:=16}/g" $CONFIG
 sed -i "s/initial_frequency.*/initial_frequency = ${INITIAL_FREQUENCY:=7100000}/g" $CONFIG
 sed -i "s/buffer_size_ms.*/buffer_size_ms = ${BUFFER_SIZE_MS:=50}/g" $CONFIG
 sed -i "s/buffer_count.*/buffer_count = ${BUFFER_COUNT:=10}/g" $CONFIG
+sed -i "s/#device_sample_rate.*/device_sample_rate = ${DEVICE_SAMPLE_RATE:=2500000}/g" $CONFIG
+sed -i "s/#maximum_bandwidth.*/maximum_bandwidth = ${MAXIMUM_BANDWIDTH:=200000}/g" $CONFIG
+
 
 exec spyserver $CONFIG
