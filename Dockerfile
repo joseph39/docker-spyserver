@@ -1,10 +1,22 @@
-FROM ubuntu:bionic
+FROM centos
 
 ARG TARGETPLATFORM
 ENV TARGETPLATFORM "$TARGETPLATFORM"
 
-RUN apt-get update
-RUN apt-get install -y rtl-sdr librtlsdr-dev wget
+RUN yum -y update \
+  && yum -y groupinstall 'Development Tools' \
+  && yum -y install unzip libusbx-devel wget cmake
+
+RUN wget https://github.com/airspy/airspyone_host/archive/v1.0.9.tar.gz \
+  && tar -xvzf v1.0.9.tar.gz \
+  && cd airspyone_host-1.0.9/libairspy \
+  && mkdir build \
+  && cd build \
+  && cmake ../ -DINSTALL_UDEV_RULES=ON \
+  && make \
+  && make install
+
+ENV LD_LIBRARY_PATH /usr/local/lib/
 
 RUN set -ex; \
   if [ "$TARGETPLATFORM" = "linux/amd64" ]; then \
